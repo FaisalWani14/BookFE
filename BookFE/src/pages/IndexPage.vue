@@ -2,7 +2,7 @@
   <q-page class="flex flex-center">
     <q-form
       @submit="onSubmit"
-      @reset="reset"
+      @reset="onReset"
       class="q-gutter-md"
       ref="BookForm"
     >
@@ -10,27 +10,33 @@
       <q-input v-model="author" type="text" label="Author" />
       <q-input v-model="year" type="number" label="Year" />
       <div>
-        <q-btn label="Submit" type="submit" color="primary"/>
-        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+        <q-btn label="Submit" type="submit" color="primary" />
+        <q-btn
+          label="Reset"
+          type="reset"
+          color="primary"
+          flat
+          class="q-ml-sm"
+        />
       </div>
     </q-form>
   </q-page>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'IndexPage',
-  data(){
-    return{
+  name: "IndexPage",
+  data() {
+    return {
       title: null,
       author: null,
       year: null,
       rows: [],
-    }
+    };
   },
-  methods:{
+  methods: {
     onSubmit() {
       const data = {
         title: this.title,
@@ -42,16 +48,17 @@ export default defineComponent({
         .then((res) => {
           if (res.status == 200) {
             this.$refs.BookForm.reset();
-        }})
+          }
+        })
         .catch((err) => {
           console.log(err);
         });
     },
-    reset(){
+    onReset() {
       this.title = null;
       this.author = null;
       this.year = null;
     },
-  }
-})
+  },
+});
 </script>

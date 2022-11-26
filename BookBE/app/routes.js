@@ -3,5 +3,7 @@ module.exports = (app) => {
     var router = require("express").Router()
     router.post("/create", controller.createNewBook)
     router.get("/all", controller.getAllBooks)
-    app.use("", router)
+    router.put("/update/:id", controller.updateBook)
+    router.delete("/delete/:id", controller.deleteBook)
+    app.use("/", router)
 }

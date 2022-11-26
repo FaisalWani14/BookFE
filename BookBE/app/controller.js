@@ -31,9 +31,49 @@ const getAllBooks = (req, res) => {
     });
 };
 
+const updateBook = (req, res) => {
+    if(!req.body){
+        res.status(400).send({ message: "Content can not be empty."});
+      }
+      const data = {
+        title: req.body.title,
+        author: req.body.author,
+        year: req.body.year
+      };
+      Book.updateBook(req.params.id, data, (err, result)=>{
+        if(err){
+          if(err.kind == "not_found"){
+            res.status(401).send({
+              message: "Not found user id: " + req.params.id
+            });
+          } else{
+            res.status(500).send({
+              message: "Error update user id: " + req.params.id
+            });
+          }
+        } else res.send(result);
+      });
+}
+
+const deleteBook = (req, res) => {
+  Book.deleteBook(req.params.id, (err, result) => {    
+    if(err){
+      if(err.kind == "not_found"){
+        res.status(401).send({
+          message: "Not found user id: " + req.params.id
+        });
+      } else{
+        res.status(500).send({
+          message: "Error update user id: " + req.params.id
+        });
+      }
+    } else res.send(result);
+  });
+};
+
 module.exports = {
-createNewBook,
-getAllBooks,
-// updateBook,
-// deleteBook
+  createNewBook,
+  getAllBooks,
+  updateBook,
+  deleteBook
 };
